@@ -10,9 +10,15 @@ let package = Package(
             targets: ["SetSolver"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0"),
+    ],
     targets: [
         .target(
-            name: "SetSolver"
+            name: "SetSolver",
+            dependencies: [
+                .product(name: "Algorithms", package: "swift-algorithms"),
+            ]
         ),
         .testTarget(
             name: "SetSolverTests",
