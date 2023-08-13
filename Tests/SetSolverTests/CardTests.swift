@@ -1,7 +1,7 @@
 import XCTest
 import SetSolver
 
-final class SetSolverTests: XCTestCase {
+final class CardTests: XCTestCase {
     func test_Card_allCases() {
         let allCards = Card.allCases
         XCTAssertEqual(allCards.count, 81)
