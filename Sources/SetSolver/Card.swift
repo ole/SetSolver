@@ -1,4 +1,4 @@
-public struct Card: Hashable, CaseIterable {
+public struct Card: Hashable, CaseIterable, Sendable {
     public var color: Color
     public var number: Number
     public var shading: Shading
@@ -42,7 +42,7 @@ public struct Card: Hashable, CaseIterable {
     }
 }
 
-public enum Color: UInt8, CaseIterable {
+public enum Color: UInt8, CaseIterable, Sendable {
     // Each case is represented by a single bit.
     // This isn't the most compact representation, but it's convenient for calculations.
     case red = 1
@@ -69,7 +69,7 @@ public enum Color: UInt8, CaseIterable {
     }
 }
 
-public enum Number: UInt8, CaseIterable {
+public enum Number: UInt8, CaseIterable, Sendable {
     // Each case is represented by a single bit.
     // This isn't the most compact representation, but it's convenient for calculations.
     case one = 1
@@ -96,7 +96,7 @@ public enum Number: UInt8, CaseIterable {
     }
 }
 
-public enum Shading: UInt8, CaseIterable {
+public enum Shading: UInt8, CaseIterable, Sendable {
     // Each case is represented by a single bit.
     // This isn't the most compact representation, but it's convenient for calculations.
     case solid = 1
@@ -106,7 +106,7 @@ public enum Shading: UInt8, CaseIterable {
     public var notation: String {
         switch self {
         case .solid: "■" // U+25A0 BLACK SQUARE
-        case .striped: "▤" // U+25A4 SQUARE WITH HORIZONTAL FILL
+        case .striped: "▥" // U+25A5 SQUARE WITH VERTICAL FILL
         case .outlined: "□" // U+25A1 WHITE SQUARE
         }
     }
@@ -123,7 +123,7 @@ public enum Shading: UInt8, CaseIterable {
     }
 }
 
-public enum Symbol: UInt8, CaseIterable {
+public enum Symbol: UInt8, CaseIterable, Sendable {
     // Each case is represented by a single bit.
     // This isn't the most compact representation, but it's convenient for calculations.
     case diamond = 1
