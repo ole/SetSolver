@@ -1,5 +1,5 @@
-import XCTest
 import SetSolver
+import XCTest
 
 final class CardTests: XCTestCase {
     func test_Card_allCases() {

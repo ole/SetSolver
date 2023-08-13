@@ -28,7 +28,7 @@ public struct Card: Hashable, CaseIterable {
     }
 
     public var notation: String {
-        "\(number.notation)\(color.notation)\(shading.notation)\(symbol.notation)"
+        "\(color.notation)\(number.notation)\(shading.notation)\(symbol.notation)"
     }
 
     /// Returns the card that forms a set with the two given cards.
