@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "SetSolver",
-    platforms: [.macOS(.v14), .iOS(.v17)],
+    platforms: [.macOS(.v15), .iOS(.v18)],
     products: [
         .library(name: "SetUI", targets: ["SetUI"]),
         .library(name: "SetSolver", targets: ["SetSolver"]),

@@ -1,8 +1,8 @@
 import SetSolver
-import XCTest
+import Testing
 
-final class SolverTests: XCTestCase {
-    func test_findSets() {
+@Suite struct SolverTests {
+    @Test func findValidSets() {
         let red_1_out_dia = Card(.one,   .diamond,  .red,   .outlined)
         let red_2_out_dia = Card(.two,   .diamond,  .red,   .outlined)
         let red_3_out_dia = Card(.three, .diamond,  .red,   .outlined)
@@ -12,16 +12,17 @@ final class SolverTests: XCTestCase {
         let cards: Set<Card> = [
             red_1_out_dia, gre_1_out_dia, red_3_out_dia, red_2_out_dia, gre_2_sol_squ, gre_3_str_ova,
         ]
-        let actual = findSets(cards: cards)
+        let actual = SetSolver.findSets(cards: cards)
         let expected: Set<Set<Card>> = [
             [red_1_out_dia, red_2_out_dia, red_3_out_dia],
             [gre_1_out_dia, gre_2_sol_squ, gre_3_str_ova],
         ]
-        let string = actual.map { set in
-            set.map(\.notation)
-                .joined(separator: ",")
-        }.joined(separator: "\n")
-        print(string)
-        XCTAssertEqual(actual, expected)
+        // For debugging test failures:
+//        let string = actual.map { set in
+//            set.map(\.notation)
+//                .joined(separator: " ")
+//        }.joined(separator: "\n")
+//        print(string)
+        #expect(actual == expected)
     }
 }

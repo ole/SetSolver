@@ -7,7 +7,7 @@
 /// - The type or "symbol" of object (diamond, oval, squiggle)
 /// - The color of the objects (red, green, purple)
 /// - The shading of the objects (solid fill, striped, outlined)
-public struct Card: Hashable, Comparable, CaseIterable, Sendable {
+public struct Card: Hashable, Comparable, CaseIterable, Sendable, CustomDebugStringConvertible {
     // IMPORTANT: If you add a stored property, you MUST update `static func <`.
     public var number: Number
     public var symbol: Symbol
@@ -40,6 +40,10 @@ public struct Card: Hashable, Comparable, CaseIterable, Sendable {
     public static func < (lhs: Self, rhs: Self) -> Bool {
         return (lhs.number, lhs.symbol, lhs.color, lhs.shading)
              < (rhs.number, rhs.symbol, rhs.color, rhs.shading)
+    }
+
+    public var debugDescription: String {
+        notation
     }
 
     public var notation: String {
