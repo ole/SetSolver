@@ -18,6 +18,7 @@ let package = Package(
         .target(
             name: "SetUI",
             dependencies: ["SetSolver"],
+            exclude: ["README.md"],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableExperimentalFeature("InternalImportsByDefault"),
@@ -31,6 +32,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
             ],
+            exclude: ["README.md"],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableExperimentalFeature("InternalImportsByDefault"),
