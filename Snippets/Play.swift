@@ -11,7 +11,7 @@ print("————————————————————————�
 
 while true {
     print("Move no.        | \(game.moves.count + 1)")
-    print("Open cards      | \(game.openCards.map(\.notation).joined(separator: " "))")
+    print("Open cards      | \(game.openCards.sorted().map(\.notation).joined(separator: " "))")
     guard let move = game.makeMove() else {
         if !game.openCards.isEmpty {
             print("No sets left, game over")
@@ -22,13 +22,13 @@ while true {
     }
 
     if let foundSet = move.foundSet {
-        print("Found set       | \(foundSet.map(\.notation).joined(separator: " "))")
+        print("Found set       | \(foundSet.sorted().map(\.notation).joined(separator: " "))")
     } else {
         print("Found set       | (none)")
     }
 
     if let newCards = move.newCards {
-        print("New cards       | \(newCards.map(\.notation).joined(separator: " "))")
+        print("New cards       | \(newCards.sorted().map(\.notation).joined(separator: " "))")
     } else if game.remainingCards.count > 12 {
         print("New cards       | (none, we already have \(game.openCards.count) open cards)")
     }

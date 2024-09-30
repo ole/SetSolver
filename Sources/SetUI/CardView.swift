@@ -26,9 +26,9 @@ struct CardView: View {
 
 #Preview {
     HStack {
-        CardView(card: Card(color: .red, number: .one, shading: .solid, symbol: .squiggle))
-        CardView(card: Card(color: .green, number: .two, shading: .striped, symbol: .diamond))
-        CardView(card: Card(color: .purple, number: .three, shading: .outlined, symbol: .oval))
+        CardView(card: Card(number: .one, symbol: .squiggle, color: .red, shading: .solid))
+        CardView(card: Card(number: .two, symbol: .diamond, color: .green, shading: .striped))
+        CardView(card: Card(number: .three, symbol: .oval, color: .purple, shading: .outlined))
     }
     .padding()
 }
