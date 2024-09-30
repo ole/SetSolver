@@ -1,10 +1,10 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 
 import PackageDescription
 
 let package = Package(
     name: "SetSolver",
-    platforms: [.macOS(.v13), .iOS(.v16)],
+    platforms: [.macOS(.v14), .iOS(.v17)],
     products: [
         .library(name: "SetUI", targets: ["SetUI"]),
         .library(name: "SetSolver", targets: ["SetSolver"]),
@@ -17,7 +17,11 @@ let package = Package(
         // [Set](https://en.wikipedia.org/wiki/Set_%28card_game%29).
         .target(
             name: "SetUI",
-            dependencies: ["SetSolver"]
+            dependencies: ["SetSolver"],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
+                .enableExperimentalFeature("InternalImportsByDefault"),
+            ]
         ),
         // Provides types for modeling the card game
         // [Set](https://en.wikipedia.org/wiki/Set_%28card_game%29),
@@ -26,11 +30,19 @@ let package = Package(
             name: "SetSolver",
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
+                .enableExperimentalFeature("InternalImportsByDefault"),
             ]
         ),
         .testTarget(
             name: "SetSolverTests",
-            dependencies: ["SetSolver"]
+            dependencies: ["SetSolver"],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
+                .enableExperimentalFeature("InternalImportsByDefault"),
+            ]
         ),
     ]
 )
