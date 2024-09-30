@@ -1,3 +1,9 @@
+/// The game state of a running game for the card game
+/// [Set](https://en.wikipedia.org/wiki/Set_%28card_game%29).
+///
+/// Models a one-player game where the goal is to find valid sets until the card
+/// deck is exhausted. This does not model a multi-player game where scores are
+/// kept by player.
 public struct Game {
     public var remainingCards: [Card]
     public var openCards: Set<Card> = []

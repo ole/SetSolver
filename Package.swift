@@ -13,10 +13,15 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0"),
     ],
     targets: [
+        // Provides SwiftUI views for rendering cards for the card game
+        // [Set](https://en.wikipedia.org/wiki/Set_%28card_game%29).
         .target(
             name: "SetUI",
             dependencies: ["SetSolver"]
         ),
+        // Provides types for modeling the card game
+        // [Set](https://en.wikipedia.org/wiki/Set_%28card_game%29),
+        // and a solver for the game.
         .target(
             name: "SetSolver",
             dependencies: [

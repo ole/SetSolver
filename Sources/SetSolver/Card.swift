@@ -1,3 +1,12 @@
+/// A single card in the card game
+/// [Set](https://en.wikipedia.org/wiki/Set_%28card_game%29).
+///
+/// Each card has four properties:
+///
+/// - The number of objects on the card (1, 2, or 3)
+/// - The color of the objects (red, green, purple)
+/// - The shading of the objects (solid fill, striped, outlined)
+/// - The type or "symbol" of object (diamond, oval, squiggle)
 public struct Card: Hashable, CaseIterable, Sendable {
     public var color: Color
     public var number: Number
@@ -32,7 +41,8 @@ public struct Card: Hashable, CaseIterable, Sendable {
     }
 
     /// Returns the card that forms a set with the two given cards.
-    /// For any two cards there exists one and only one matching card to form a set.
+    ///
+    /// For any two cards there exists exactly one matching card to form a set.
     public static func matchingCard(for a: Card, and b: Card) -> Card {
         let color = Color.matchingItem(for: a.color, and: b.color)
         let number = Number.matchingItem(for: a.number, and: b.number)
