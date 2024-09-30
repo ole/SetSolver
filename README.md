@@ -1,11 +1,12 @@
-# SetSolver package
+# SetSolver
 
-## Products
+A Swift package about the card game
+  [Set](https://en.wikipedia.org/wiki/Set_%28card_game%29).
 
-- SetSolver: A library that provides types to model the card game
-  [Set](https://en.wikipedia.org/wiki/Set_%28card_game%29) in Swift, and a
-  solver for the game.
-  
+## Components
+
+- SetSolver: A library that provides types to model the game Set in Swift,
+  and a solver for the game.
 - SetUI: A library that provides SwiftUI views for rendering Set cards.
 
 ## Card notation
