@@ -9,16 +9,15 @@
 /// - The shading of the objects (solid fill, striped, outlined)
 public struct Card: Hashable, Comparable, CaseIterable, Sendable, CustomDebugStringConvertible {
     // IMPORTANT: If you add a stored property, you MUST update `static func <`.
-    public var number: Number
-    public var symbol: Symbol
-    public var color: Color
-    public var shading: Shading
+    private let bits: UInt16
+
+    public var number:  Number  { .init(bits: bits) }
+    public var symbol:  Symbol  { .init(bits: bits) }
+    public var color:   Color   { .init(bits: bits) }
+    public var shading: Shading { .init(bits: bits) }
 
     public init(number: Number, symbol: Symbol, color: Color, shading: Shading) {
-        self.number = number
-        self.symbol = symbol
-        self.color = color
-        self.shading = shading
+        self.bits = number.bits | symbol.bits | color.bits | shading.bits
     }
 
     public init( _ number: Number, _ symbol: Symbol, _ color: Color, _ shading: Shading) {
@@ -38,8 +37,7 @@ public struct Card: Hashable, Comparable, CaseIterable, Sendable, CustomDebugStr
     }
 
     public static func < (lhs: Self, rhs: Self) -> Bool {
-        return (lhs.number, lhs.symbol, lhs.color, lhs.shading)
-             < (rhs.number, rhs.symbol, rhs.color, rhs.shading)
+        return lhs.rawValue < rhs.rawValue
     }
 
     public var debugDescription: String {
@@ -62,16 +60,13 @@ public struct Card: Hashable, Comparable, CaseIterable, Sendable, CustomDebugStr
     }
 }
 
-public enum Color: UInt8, Comparable, CaseIterable, Sendable {
+public enum Color: UInt8, CardProperty, CaseIterable, Sendable {
     // Each case is represented by a single bit.
     // This isn't the most compact representation, but it's convenient for calculations.
-    case red = 1
-    case green = 2
-    case purple = 4
-
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.rawValue < rhs.rawValue
-    }
+    case red    = 0b001
+    case green  = 0b010
+    case purple = 0b100
+    static var bitOffset: Int { 8 }
 
     public var notation: String {
         switch self {
@@ -80,29 +75,15 @@ public enum Color: UInt8, Comparable, CaseIterable, Sendable {
         case .purple: "p"
         }
     }
-
-    public static func matchingItem(for a: Self, and b: Self) -> Self {
-        if a == b {
-            return a
-        } else {
-            // a XOR b sets the bits that represent a and b.
-            // Negating selects the bit that represents the missing case.
-            let c = ~(a.rawValue ^ b.rawValue) & 0b111
-            return Self(rawValue: c)!
-        }
-    }
 }
 
-public enum Number: UInt8, Comparable, CaseIterable, Sendable {
+public enum Number: UInt8, CardProperty, CaseIterable, Sendable {
     // Each case is represented by a single bit.
     // This isn't the most compact representation, but it's convenient for calculations.
-    case one = 1
-    case two = 2
-    case three = 4
-
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.rawValue < rhs.rawValue
-    }
+    case one   = 0b001
+    case two   = 0b010
+    case three = 0b100
+    static var bitOffset: Int { 0 }
 
     public var notation: String {
         switch self {
@@ -111,29 +92,15 @@ public enum Number: UInt8, Comparable, CaseIterable, Sendable {
         case .three: return "3"
         }
     }
-
-    public static func matchingItem(for a: Self, and b: Self) -> Self {
-        if a == b {
-            return a
-        } else {
-            // a XOR b sets the bits that represent a and b.
-            // Negating selects the bit that represents the missing case.
-            let c = ~(a.rawValue ^ b.rawValue) & 0b111
-            return Self(rawValue: c)!
-        }
-    }
 }
 
-public enum Shading: UInt8, Comparable, CaseIterable, Sendable {
+public enum Shading: UInt8, CardProperty, CaseIterable, Sendable {
     // Each case is represented by a single bit.
     // This isn't the most compact representation, but it's convenient for calculations.
-    case solid = 1
-    case striped = 2
-    case outlined = 4
-
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.rawValue < rhs.rawValue
-    }
+    case solid    = 0b001
+    case striped  = 0b010
+    case outlined = 0b100
+    static var bitOffset: Int { 12 }
 
     public var notation: String {
         switch self {
@@ -142,29 +109,15 @@ public enum Shading: UInt8, Comparable, CaseIterable, Sendable {
         case .outlined: "□" // U+25A1 WHITE SQUARE
         }
     }
-
-    public static func matchingItem(for a: Self, and b: Self) -> Self {
-        if a == b {
-            return a
-        } else {
-            // a XOR b sets the bits that represent a and b.
-            // Negating selects the bit that represents the missing case.
-            let c = ~(a.rawValue ^ b.rawValue) & 0b111
-            return Self(rawValue: c)!
-        }
-    }
 }
 
-public enum Symbol: UInt8, Comparable, CaseIterable, Sendable {
+public enum Symbol: UInt8, CardProperty, CaseIterable, Sendable {
     // Each case is represented by a single bit.
     // This isn't the most compact representation, but it's convenient for calculations.
-    case diamond = 1
-    case oval = 2
-    case squiggle = 4
-
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.rawValue < rhs.rawValue
-    }
+    case diamond  = 0b001
+    case oval     = 0b010
+    case squiggle = 0b100
+    static var bitOffset: Int { 4 }
 
     public var notation: String {
         switch self {
@@ -173,15 +126,21 @@ public enum Symbol: UInt8, Comparable, CaseIterable, Sendable {
         case .squiggle: "S"
         }
     }
+}
 
-    public static func matchingItem(for a: Self, and b: Self) -> Self {
-        if a == b {
-            return a
-        } else {
-            // a XOR b sets the bits that represent a and b.
-            // Negating selects the bit that represents the missing case.
-            let c = ~(a.rawValue ^ b.rawValue) & 0b111
-            return Self(rawValue: c)!
-        }
+protocol CardProperty: RawRepresentable where RawValue == UInt8 {
+    static var bitOffset: Int { get }
+}
+
+extension CardProperty {
+    fileprivate init(bits: UInt16) {
+        self.init(rawValue: UInt8((bits >> Self.bitOffset) & 0b111))!
+    }
+
+    fileprivate var bits: UInt16 { UInt16(rawValue) << Self.bitOffset }
+
+    fileprivate static func matchingItem(for a: Self, and b: Self) -> Self {
+        guard a != b else { return a }
+        return Self(rawValue: (a.rawValue | b.rawValue) ^ 0b111)!
     }
 }
