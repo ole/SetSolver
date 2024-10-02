@@ -60,6 +60,15 @@ public struct Card: Hashable, Comparable, CaseIterable, Sendable, CustomDebugStr
     }
 }
 
+extension Card: RawRepresentable, Codable {
+    public var rawValue: UInt16 { bits }
+
+    public init?(rawValue: UInt16) {
+        guard rawValue & ~0x777 == 0 else { return nil }
+        self.bits = rawValue
+    }
+}
+
 public enum Color: UInt8, CardProperty, CaseIterable, Sendable {
     // Each case is represented by a single bit.
     // This isn't the most compact representation, but it's convenient for calculations.
