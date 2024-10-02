@@ -49,6 +49,17 @@ public struct Card: Hashable, Comparable, CaseIterable, Sendable, CustomDebugStr
         "\(number.notation)\(symbol.notation)\(color.notation)\(shading.notation)"
     }
 
+    public init?(_ notation: String) {
+        guard notation.count == 4 else { return nil }
+        var i = notation.makeIterator()
+        var next: Character { i.next()! }
+        guard let number  =  Number(next) else { return nil }
+        guard let symbol  =  Symbol(next) else { return nil }
+        guard let color   =   Color(next) else { return nil }
+        guard let shading = Shading(next) else { return nil }
+        self.init(number, symbol, color, shading)
+    }
+
     /// Returns the card that forms a set with the two given cards.
     ///
     /// For any two cards there exists exactly one matching card to form a set.
@@ -85,6 +96,15 @@ public enum Color: UInt8, CardProperty, CaseIterable, Sendable {
         case .purple: "p"
         }
     }
+
+    public init?(_ notation: Character) {
+        switch notation {
+        case "r": self = .red
+        case "g": self = .green
+        case "p": self = .purple
+        default: return nil
+        }
+    }
 }
 
 public enum Number: UInt8, CardProperty, CaseIterable, Sendable {
@@ -100,6 +120,15 @@ public enum Number: UInt8, CardProperty, CaseIterable, Sendable {
         case .one: return "1"
         case .two: return "2"
         case .three: return "3"
+        }
+    }
+
+    public init?(_ notation: Character) {
+        switch notation {
+        case "1": self = .one
+        case "2": self = .two
+        case "3": self = .three
+        default: return nil
         }
     }
 }
@@ -119,6 +148,15 @@ public enum Shading: UInt8, CardProperty, CaseIterable, Sendable {
         case .outlined: "□" // U+25A1 WHITE SQUARE
         }
     }
+
+    public init?(_ notation: Character) {
+        switch notation {
+        case "■": self = .solid
+        case "▥": self = .striped
+        case "□": self = .outlined
+        default: return nil
+        }
+    }
 }
 
 public enum Symbol: UInt8, CardProperty, CaseIterable, Sendable {
@@ -134,6 +172,15 @@ public enum Symbol: UInt8, CardProperty, CaseIterable, Sendable {
         case .diamond: "D"
         case .oval: "O"
         case .squiggle: "S"
+        }
+    }
+
+    public init?(_ notation: Character) {
+        switch notation {
+        case "D": self = .diamond
+        case "O": self = .oval
+        case "S": self = .squiggle
+        default: return nil
         }
     }
 }
