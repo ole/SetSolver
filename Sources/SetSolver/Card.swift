@@ -18,6 +18,7 @@ public struct Card: Hashable, Comparable, CaseIterable, Sendable, CustomDebugStr
 
     public init(number: Number, symbol: Symbol, color: Color, shading: Shading) {
         self.bits = number.bits | symbol.bits | color.bits | shading.bits
+        assert(bits.nonzeroBitCount == 4)
     }
 
     public init( _ number: Number, _ symbol: Symbol, _ color: Color, _ shading: Shading) {
