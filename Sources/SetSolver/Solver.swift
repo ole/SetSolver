@@ -15,6 +15,18 @@ import Algorithms
 ///   If no valid set is found, the result will be the empty `Set`.
 ///   If the input contains less than 3 cards, the result set will
 ///   always be empty.
+///
+/// - Complexity: O(n²), where n is the number of elements in `cards`.
+///
+/// Algorithm:
+///
+/// 1. Generate all possible 2-card pairs in `cards`. There are `(n × (n+1)) / 2`
+///    such pairs. E.g. for n == 12, there are `(12 × 13) / 2 = 78` pairs.
+///    Complexity: O(n²).
+/// 2. For each pair, compute the unique card that makes a valid set.
+///    Complexity: O(1).
+/// 3. Check if the matching card is present in `cards`. If so, we have found a
+///    set. Complexity: O(1).
 public func findSets(cards: Set<Card>) -> Set<Set<Card>> {
     guard cards.count >= 3 else {
         return []
