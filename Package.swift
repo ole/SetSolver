@@ -7,6 +7,7 @@ let package = Package(
     platforms: [.macOS(.v15), .iOS(.v18), .macCatalyst(.v18), .tvOS(.v18), .watchOS(.v11), .visionOS(.v2)],
     products: [
         .library(name: "SetUI", targets: ["SetUI"]),
+        .library(name: "SetVision", targets: ["SetVision"]),
         .library(name: "SetSolver", targets: ["SetSolver"]),
     ],
     dependencies: [
@@ -19,6 +20,28 @@ let package = Package(
             name: "SetUI",
             dependencies: ["SetSolver"],
             exclude: ["README.md"],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
+                .enableExperimentalFeature("InternalImportsByDefault"),
+            ]
+        ),
+        // Computer vision for the card game
+        // [Set](https://en.wikipedia.org/wiki/Set_%28card_game%29).
+        .target(
+            name: "SetVision",
+            dependencies: ["SetSolver"],
+            exclude: ["README.md"],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
+                .enableExperimentalFeature("InternalImportsByDefault"),
+            ]
+        ),
+        .testTarget(
+            name: "SetVisionTests",
+            dependencies: ["SetVision"],
+            resources: [
+                .copy("Fixtures"),
+            ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableExperimentalFeature("InternalImportsByDefault"),
