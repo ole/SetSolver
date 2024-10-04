@@ -1,4 +1,3 @@
-import CoreGraphics
 import Vision
 
 public func detectRectangles(in imageURL: URL) async throws -> [RectangleObservation] {
