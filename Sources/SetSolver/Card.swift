@@ -64,6 +64,7 @@ public struct Card: Hashable, Comparable, CaseIterable, Sendable, CustomDebugStr
     ///
     /// For any two cards there exists exactly one matching card to form a set.
     public static func matchingCard(for a: Card, and b: Card) -> Card {
+        precondition(a != b, "a and b are identical, this is not allowed")
         let color = Color.matchingItem(for: a.color, and: b.color)
         let number = Number.matchingItem(for: a.number, and: b.number)
         let shading = Shading.matchingItem(for: a.shading, and: b.shading)
