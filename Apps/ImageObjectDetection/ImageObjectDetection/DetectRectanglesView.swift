@@ -29,6 +29,7 @@ struct DetectRectanglesView: View {
     // as a proportion of the smallest dimension of the image.
     // This is important to tweak to make sure all cards are detected.
     @State private var minimumRectangleSize: Float = 0.1
+    @State private var minimumConfidence: Float = 0.0
 
     var body: some View {
         VStack {
@@ -70,15 +71,19 @@ struct DetectRectanglesView: View {
             Slider(value: $minimumRectangleSize, in: 0.05...0.95, step: 0.05) {
                 Text("Min rect size: \(minimumRectangleSize, format: .number.precision(.fractionLength(2)))")
             }
+            Slider(value: $minimumConfidence, in: 0.0...1.0, step: 0.05) {
+                Text("Min confidence: \(minimumConfidence, format: .number.precision(.fractionLength(2)))")
+            }
         }
         .padding()
-        .task(id: minimumRectangleSize) {
+        .task(id: detectionRequest) {
             state = .running
             do {
-                logger.debug("Starting rectangle detection")
+                logger.debug("Starting rectangle detection for \(imageURL.lastPathComponent)")
                 let rectangles = try await detectRectangles(
-                    in: imageURL,
-                    minimumSize: minimumRectangleSize
+                    in: detectionRequest.imageURL,
+                    minimumSize: detectionRequest.minimumSize,
+                    minimumConfidence: detectionRequest.minimumConfidence
                 )
                 try Task.checkCancellation()
                 self.state = .finished(rectangles)
@@ -90,6 +95,20 @@ struct DetectRectanglesView: View {
             }
         }
     }
+
+    private var detectionRequest: RectangleDetectionRequest {
+        RectangleDetectionRequest(
+            imageURL: imageURL,
+            minimumSize: minimumRectangleSize,
+            minimumConfidence: minimumConfidence
+        )
+    }
+}
+
+struct RectangleDetectionRequest: Equatable {
+    var imageURL: URL
+    var minimumSize: Float
+    var minimumConfidence: Float
 }
 
 #Preview {
