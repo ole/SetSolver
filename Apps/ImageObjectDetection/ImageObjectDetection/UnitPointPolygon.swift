@@ -26,7 +26,7 @@ extension CGRect {
     func position(_ unitPoint: UnitPoint) -> CGPoint {
         CGPoint(
             x: minX + unitPoint.x * width,
-            y: maxY - unitPoint.y * height
+            y: minY + unitPoint.y * height
         )
     }
 }

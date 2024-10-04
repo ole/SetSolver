@@ -5,15 +5,6 @@ import Vision
 
 private let logger = Logger(subsystem: "DetectRectanglesView", category: "App")
 
-private let sampleRectangles: [RectangleObservation] = [
-    .init(
-        topLeft: .init(x: 0.25, y: 0.1),
-        topRight: .init(x: 0.6, y: 0.15),
-        bottomRight: .init(x: 0.65, y: 0.5),
-        bottomLeft: .init(x: 0.3, y: 0.45)
-    ),
-]
-
 struct DetectRectanglesView: View {
     enum DetectionState {
         case running
@@ -57,13 +48,7 @@ struct DetectRectanglesView: View {
                 .overlay {
                     if case .finished(let rectangles) = state {
                         ForEach(rectangles, id: \.self) { rect in
-                            UnitPointPolygon(points: [
-                                UnitPoint(rect.topLeft),
-                                UnitPoint(rect.topRight),
-                                UnitPoint(rect.bottomRight),
-                                UnitPoint(rect.bottomLeft),
-                            ])
-                            .stroke(.red, lineWidth: 2)
+                            RectangleObservationView(rect: rect)
                         }
                     }
                 }
