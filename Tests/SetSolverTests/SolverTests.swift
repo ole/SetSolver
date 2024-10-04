@@ -55,6 +55,7 @@ import Testing
         (deck: "3Sr■ 3Og■ 1Op■ 2Op■ 3Op■ 3Dr▥ 2Dg▥ 3Og▥ 1Sg▥ 3Sg▥ 1Dr□ 1Og□", expect: ["1Op■ 2Op■ 3Op■", "2Dg▥ 3Og▥ 1Sg▥", "1Op■ 1Sg▥ 1Dr□", "2Op■ 3Sg▥ 1Dr□"]),
         (deck: "1Dp■ 2Dp■ 1Dr▥ 2Sr▥ 3Sr▥ 2Dg▥ 3Dp▥ 2Sr□ 1Dg□ 1Sg□ 3Op□ 3Sp□", expect: ["1Dr▥ 2Dg▥ 3Dp▥", "1Dp■ 1Dr▥ 1Dg□", "2Sr□ 1Dg□ 3Op□", "2Sr□ 1Sg□ 3Sp□"]),
         (deck: "1Dg■ 2Dp▥ 2Dg■ 3Sg□ 2Sg▥ 2Sp■ 2Sp□ 3Sp■ 2Dr▥ 1Dg▥ 3Dr■ 1Or▥ 2Sg□ 1Sr■ 3Sp▥", expect: ["3Sp▥ 1Sr■ 2Sg□"]),
+        (deck: "2Sr■ 3Sr■ 3Or□ 2Op□ 1Or■ 3Or■ 3Sg■ 2Dg■ 1Sp□ 3Sp▥ 3Dg▥ 1Sr▥", expect: []),
     ] as [(CardSet, [CardSet])])
     func findSets(deck: CardSet, expect: [CardSet]) {
         let result = SetSolver.findSets(cards: deck.cards)
