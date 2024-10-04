@@ -16,9 +16,10 @@ struct DetectRectanglesView: View {
     var imageURL: URL
 
     @State private var state: DetectionState = .finished([])
-    // The minimum size of the rectangle to be detected,
-    // as a proportion of the smallest dimension of the image.
-    // This is important to tweak to make sure all cards are detected.
+    @State private var requestCounter: Int = 1
+    /// The minimum size of the rectangle to be detected,
+    /// as a proportion of the smallest dimension of the image.
+    /// This is important to tweak to make sure all cards are detected.
     @State private var minimumRectangleSize: Float = 0.1
     @State private var minimumConfidence: Float = 0.0
 
@@ -33,12 +34,12 @@ struct DetectRectanglesView: View {
             case .finished(let rectangles):
                 HStack {
                     Text("Detected \(rectangles.count) rectangles")
-                    Button("Retry") {}
+                    Button("Retry") { requestCounter += 1 }
                 }
             case .failed(let error):
                 HStack {
                     Text("Error: \(error.localizedDescription)")
-                    Button("Retry") {}
+                    Button("Retry") { requestCounter += 1 }
                 }
             }
 
@@ -83,6 +84,7 @@ struct DetectRectanglesView: View {
 
     private var detectionRequest: RectangleDetectionRequest {
         RectangleDetectionRequest(
+            requestID: requestCounter,
             imageURL: imageURL,
             minimumSize: minimumRectangleSize,
             minimumConfidence: minimumConfidence
@@ -91,6 +93,7 @@ struct DetectRectanglesView: View {
 }
 
 struct RectangleDetectionRequest: Equatable {
+    var requestID: Int
     var imageURL: URL
     var minimumSize: Float
     var minimumConfidence: Float
