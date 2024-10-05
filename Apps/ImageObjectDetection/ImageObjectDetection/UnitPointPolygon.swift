@@ -16,12 +16,6 @@ struct UnitPointPolygon: Shape {
     }
 }
 
-extension UnitPoint {
-    init(_ normalizedPoint: NormalizedPoint) {
-        self.init(x: normalizedPoint.x, y: normalizedPoint.y)
-    }
-}
-
 extension CGRect {
     func position(_ unitPoint: UnitPoint) -> CGPoint {
         CGPoint(
