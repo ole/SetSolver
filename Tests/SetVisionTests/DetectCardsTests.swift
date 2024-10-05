@@ -15,7 +15,11 @@ struct DetectCardsTests {
     ])
     func findRectangles(imageFilename: String, expectedRectCount: Int) async throws {
         let imageURL = try #require(fixtureURL(imageFilename))
-        let rectangles = try await detectRectangles(in: imageURL)
+        let rectangles = try await detectRectangles(
+            in: imageURL,
+            minimumSize: 0.1,
+            minimumConfidence: 0.9
+        )
         #expect(rectangles.count == expectedRectCount, "\(imageFilename)")
     }
 }
