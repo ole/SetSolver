@@ -9,9 +9,11 @@ let package = Package(
         .library(name: "SetUI", targets: ["SetUI"]),
         .library(name: "SetVision", targets: ["SetVision"]),
         .library(name: "SetSolver", targets: ["SetSolver"]),
+        .executable(name: "DetectRectangles", targets: ["DetectRectanglesCLI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
     ],
     targets: [
         // Provides SwiftUI views for rendering cards for the card game
@@ -41,6 +43,18 @@ let package = Package(
             dependencies: ["SetVision"],
             resources: [
                 .copy("Fixtures"),
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
+                .enableExperimentalFeature("InternalImportsByDefault"),
+            ]
+        ),
+        // Extract detected rectangles from image files
+        .executableTarget(
+            name: "DetectRectanglesCLI",
+            dependencies: [
+                "SetVision",
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
