@@ -20,8 +20,8 @@ import Algorithms
 ///
 /// Algorithm:
 ///
-/// 1. Generate all possible 2-card pairs in `cards`. There are `(n × (n+1)) / 2`
-///    such pairs. E.g. for n == 12, there are `(12 × 13) / 2 = 78` pairs.
+/// 1. Generate all possible 2-card pairs in `cards`. There are `((n - 1) × n) / 2`
+///    such pairs. E.g. for n == 12, there are `(11 × 12) / 2 = 66` pairs.
 ///    Complexity: O(n²).
 /// 2. For each pair, compute the unique card that makes a valid set.
 ///    Complexity: O(1).
