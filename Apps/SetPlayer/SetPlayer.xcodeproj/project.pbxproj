@@ -19,6 +19,7 @@
 /* Begin PBXFileReference section */
 		5DC9CE0B2CC13A190022695E /* SetPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SetPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DC9CE1C2CC13A1A0022695E /* SetPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SetPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DF172B42CC17D4000E68D56 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -55,6 +56,7 @@
 		5DC9CE022CC13A190022695E = {
 			isa = PBXGroup;
 			children = (
+				5DF172B42CC17D4000E68D56 /* README.md */,
 				5DC9CE0D2CC13A190022695E /* SetPlayer */,
 				5DC9CE1F2CC13A1A0022695E /* SetPlayerTests */,
 				5DC9CE0C2CC13A190022695E /* Products */,

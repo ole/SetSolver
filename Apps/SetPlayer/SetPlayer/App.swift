@@ -4,7 +4,7 @@ import SwiftUI
 struct SetPlayerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
     }
 }
