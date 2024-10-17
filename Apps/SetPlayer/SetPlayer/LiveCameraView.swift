@@ -72,18 +72,19 @@ extension LiveCameraView.Coordinator: ARSessionDelegate {
         dispatchPrecondition(condition: .onQueue(arSessionQueue))
         logger.debug("Received frame from ARSession – timestamp=\(frame.timestamp)")
         guard let visionRequest else { return }
-        Task.detached { [visionRequest] in
+        Task.detached {
             do {
                 let observations = try await visionRequest.perform(on: frame.capturedImage)
                     .compactMap { $0 as? RecognizedObjectObservation }
-                logger.info("Detected \(observations.count) Set cards")
+                logger.info("Detected \(observations.count) cards")
                 for observation in observations {
+                    // TODO: Is sorting necessary? They may already be sorted in the order of confidence.
                     let labels = observation.labels.sorted { $0.confidence > $1.confidence }
                     let best = labels[0]
                     logger.info("\(observation.confidence) – \(best.identifier) \(best.confidence)")
                 }
             } catch {
-                logger.warning("CoreMLRequest error: \(error)")
+                logger.warning("Vision error: \(error)")
             }
         }
     }
