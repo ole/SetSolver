@@ -6,7 +6,7 @@ import Vision
 
 private let logger = Logger(subsystem: #fileID, category: Bundle.main.bundleIdentifier!)
 
-struct ARViewSwiftUI: UIViewRepresentable {
+struct LiveCameraView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         Coordinator()
     }
@@ -41,7 +41,7 @@ struct ARViewSwiftUI: UIViewRepresentable {
     }
 }
 
-extension ARViewSwiftUI {
+extension LiveCameraView {
     final class Coordinator: NSObject {
         var isFirstUpdate: Bool = true
         let arSessionQueue: DispatchQueue = DispatchQueue(label: "\(Bundle.main.bundleIdentifier!).ARSessionDelegate")
@@ -61,10 +61,10 @@ extension ARViewSwiftUI {
     }
 }
 
-extension ARViewSwiftUI.Coordinator: ARSCNViewDelegate {
+extension LiveCameraView.Coordinator: ARSCNViewDelegate {
 }
 
-extension ARViewSwiftUI.Coordinator: ARSessionDelegate {
+extension LiveCameraView.Coordinator: ARSessionDelegate {
     /// Provides a newly captured camera image and accompanying AR information.
     ///
     /// Runs on ``arSessionQueue``.
